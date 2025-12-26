@@ -1,4 +1,5 @@
-
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySQL(builder.Configuration.GetConnectionString("Default")));
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 

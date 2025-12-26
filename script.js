@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('/api/invoice')
+    fetch('https://<your-api>.onrender.com/api/invoice/1')
+
         .then(resp => {
             if (!resp.ok) {
                 throw new Error("Server returned " + resp.status);
