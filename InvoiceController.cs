@@ -11,7 +11,7 @@ namespace BuggyApp.Controllers
         [HttpGet]
         public IActionResult GetInvoice()
         {
-            List<Item> items = null;
+            List<Item> items = new List<Item>();;
             if (items.Count == 0) // NullReferenceException
             {
                 return Ok(new { items });

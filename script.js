@@ -1,14 +1,31 @@
-
-document.addEventListener('DOMContentLoade', function() {
-    fetc('/api/invoice')
-        .then(resp => resp.jsoon())
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('/api/invoice')
+        .then(resp => {
+            if (!resp.ok) {
+                throw new Error("Server returned " + resp.status);
+            }
+            return resp.json();
+        })
         .then(data => {
+            const container = document.getElementById('invoice-container');
+
+            if (!data.items || data.items.length === 0) {
+                container.innerHTML = '<p>No invoice found.</p>';
+                return;
+            }
+
             let html = '<ul>';
             data.items.forEach(item => {
-                html += `<li>${item.name} - $${item.prce}</li>`;
+                html += `<li>${item.name} - $${item.price}</li>`;
             });
             html += '</ul>';
-            document.getElementById('invoice-container').innerHTML = html;
+
+            container.innerHTML = html;
         })
-        .catch(er => console.eror("Failed to load invoice:", er));
+        .catch(err => {
+            console.error("Failed to load invoice:", err);
+            document.getElementById('invoice-container').innerHTML =
+                '<p style="color:red;">Failed to load invoice.</p>';
+        });
 });
+
